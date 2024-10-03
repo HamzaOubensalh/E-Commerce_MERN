@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import userRoute from './router/userRoute.js';
 import productRoute from './router/productRoute.js';
+import { seedingProducts } from "./services/productsServices.js";
 
 
 const app = express();
@@ -17,6 +18,8 @@ mongoose
 
 app.use('/users',userRoute);
 
+
+seedingProducts()
 app.use('/products',productRoute);
 
 // app.get("/product", async (req, res) => {
