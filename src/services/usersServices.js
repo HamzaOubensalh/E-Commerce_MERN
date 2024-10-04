@@ -26,5 +26,5 @@ export const login = async ({ email, password }) => {
 };
 
 const generateToken=(data)=>{
-  return jwt.sign({data},'77D954A5CBBC9BDAE7FD75C16C59A',{expiresIn:'24h'})
+  return jwt.sign({data},'77D954A5CBBC9BDAE7FD75C16C59A');
 }

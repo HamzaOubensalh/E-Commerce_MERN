@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import userRoute from './router/userRoute.js';
 import productRoute from './router/productRoute.js';
+import cartRoute from './router/cartRouter.js';
 import { seedingProducts } from "./services/productsServices.js";
 
 
@@ -21,6 +22,7 @@ app.use('/users',userRoute);
 
 seedingProducts()
 app.use('/products',productRoute);
+app.use('/cart',cartRoute)
 
 // app.get("/product", async (req, res) => {
 //   try{
