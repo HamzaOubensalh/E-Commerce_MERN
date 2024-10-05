@@ -18,7 +18,7 @@ export const validateJWT = async (req, res, next) => {
       res.status(403).send("Invalid Token");
       return;
     }
-    if (!payload || !payload.data) {
+    if (!payload ) {
       res.status(403).send("Invalid Payload");
       return;
     }
