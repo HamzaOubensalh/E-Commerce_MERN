@@ -1,6 +1,6 @@
 import { userModel } from "../modules/users.js";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
 export const register = async ({ username, email, password }) => {
   const findUser = await userModel.findOne({ email });
@@ -25,6 +25,10 @@ export const login = async ({ email, password }) => {
   return { data: "Email Or Password Not Correct", statusCode: 400 };
 };
 
-const generateToken=(data)=>{
-  return jwt.sign({data},'77D954A5CBBC9BDAE7FD75C16C59A');
-}
+
+// Function to generate a token
+const generateToken = (userData) => {
+  const secret = process.env.JWT_SECRET || "F1AD4A54BEF596923FFCF5DBFB1ED";
+  return jwt.sign({ data: userData }, secret, { expiresIn: '1h' }); // Token valid for 1 hour
+};
+

@@ -13,12 +13,18 @@ export const validateJWT = async (req, res, next) => {
     res.status(403).send("Bearer Token Not Found");
     return;
   }
-  jwt.verify(token, "77D954A5CBBC9BDAE7FD75C16C59A", async (err, payload) => {
+  const secret = process.env.JWT_SECRET || "F1AD4A54BEF596923FFCF5DBFB1ED";
+  jwt.verify(token, secret, async (err, payload) => {
     if (err) {
-      res.status(403).send("Invalid Token");
-      return;
+      if (err.name === "TokenExpiredError") {
+        res.status(401).send("Token Expired");
+        return
+      } else {
+        res.status(403).send("Invalid Token");
+        return;
+      }
     }
-    if (!payload ) {
+    if (!payload || !payload.data) {
       res.status(403).send("Invalid Payload");
       return;
     }
