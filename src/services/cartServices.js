@@ -25,12 +25,15 @@ export const deleteAllProduct = async ({ userId }) => {
 };
 
 export const addItemToCart = async ({ userId, productId, quantity }) => {
-  const cart = await getActiveCart({ userId });
+  try{
+    const cart = await getActiveCart({ userId });
 
   console.log(cart);
 
   //Does The Item Exists In The Cart
-  const ExistingItem = cart.items.find((p) => p.product === productId);
+  const ExistingItem = cart.items.find(
+    (p) => p.product === productId
+  );
   console.log(ExistingItem);
   if (ExistingItem) {
     return { data: "That Item Has Already Exist", statusCode: 400 };
@@ -38,6 +41,7 @@ export const addItemToCart = async ({ userId, productId, quantity }) => {
   //Fetch Product
   console.log(productId);
   const Product = await productModel.findById(productId);
+  console.log(Product)
 
   if (!Product) {
     return { data: "Product Not Found", statusCode: 404 };
@@ -52,6 +56,10 @@ export const addItemToCart = async ({ userId, productId, quantity }) => {
 
   const UpdatedCart = await cart.save();
   return { data: UpdatedCart, statusCode: 201 };
+  }catch(err){
+    console.log(err)
+  }
+  
 };
 
 export const updateProductInCart = async ({ userId, productId, quantity }) => {

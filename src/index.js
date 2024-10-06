@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -6,6 +7,11 @@ import productRoute from './router/productRoute.js';
 import cartRoute from './router/cartRouter.js';
 import { seedingProducts } from "./services/productsServices.js";
 
+dotenv.config()
+
+console.log(process.env.DATABASE_URL)
+
+const dbUrl=process.env.DATABASE_URL || '';
 
 const app = express();
 
@@ -14,8 +20,10 @@ app.use(cors());
 
 
 mongoose
-.connect("mongodb://localhost:27017/EcommerceStore")
-.then(() => console.log("Database Connection"));
+.connect(dbUrl)
+.then(() => console.log("Database Connection"))
+.catch((err)=>console.log("There Is An Error",err.message))
+;
 
 app.use('/users',userRoute);
 

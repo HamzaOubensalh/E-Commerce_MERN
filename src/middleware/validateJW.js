@@ -13,7 +13,7 @@ export const validateJWT = async (req, res, next) => {
     res.status(403).send("Bearer Token Not Found");
     return;
   }
-  const secret = process.env.JWT_SECRET || "F1AD4A54BEF596923FFCF5DBFB1ED";
+  const secret = process.env.JWT_SECRET || "";
   jwt.verify(token, secret, async (err, payload) => {
     if (err) {
       if (err.name === "TokenExpiredError") {

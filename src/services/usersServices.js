@@ -28,7 +28,7 @@ export const login = async ({ email, password }) => {
 
 // Function to generate a token
 const generateToken = (userData) => {
-  const secret = process.env.JWT_SECRET || "F1AD4A54BEF596923FFCF5DBFB1ED";
+  const secret = process.env.JWT_SECRET || "";
   return jwt.sign({ data: userData }, secret, { expiresIn: '1h' }); // Token valid for 1 hour
 };
 
